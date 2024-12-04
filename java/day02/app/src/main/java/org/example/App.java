@@ -4,11 +4,10 @@
 package org.example;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+    public static void main(String[] args) throws Exception {
+        ReportGenerator reportGenerator = new ReportGenerator("/Users/jamesharrington/Repos/AdventOfCode2024/java/day02/app/src/main/java/org/example/input1.txt");
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        System.out.println("Advent of Code: Day 1, Part 1 -- " + reportGenerator.howManySafe());
+        System.out.println("Advent of Code: Day 1, Part 2 -- " + reportGenerator.howManySafeWithARemoval());
     }
 }

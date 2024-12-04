@@ -3,12 +3,37 @@
  */
 package org.example;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportTests {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    @ParameterizedTest
+    @ValueSource(strings = {"7 6 4 2 1", "1 3 6 7 9"})
+    void identifiesCorrectSafeReports(String input) {
+        Report safeReport = new Report(input);
+        assertTrue(safeReport.isReportSafe());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1 2 7 8 9", "9 7 6 2 1", "1 3 2 4 5", "8 6 4 4 1"})
+    void identifiesCorrectUnsafeReport(String input) {
+        Report unsafeReport = new Report(input);
+        assertFalse(unsafeReport.isReportSafe());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0 6 4 2 1", "7 0 4 2 1", "7 6 4 2 10",  "7 6 4 2 1", "1 3 6 7 9", "1 3 2 4 5", "8 6 4 4 1", "8 6 4 3 0", "9 2 6 4", "7 10 6 4 2 1"})
+    void identifiesCorrectSafeWithRemovalReports(String input) {
+        Report safeReport = new Report(input);
+        assertTrue(safeReport.isReportSafeWithARemoval());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1 2 7 8 9", "9 7 6 2 1", "9 7 6 2 7"})
+    void identifiesCorrectUnsafeWithRemovalReport(String input) {
+        Report unsafeReport = new Report(input);
+        assertFalse(unsafeReport.isReportSafeWithARemoval());
     }
 }
